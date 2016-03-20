@@ -1,0 +1,19 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to #{title}
+  form
+    input(type='text')
+    input(type='submit', value='Send')
+  script(src='https://code.jquery.com/jquery-1.10.2.js')
+  script(src='/socket.io/socket.io.js')
+  script.
+    var socket = io.connect('http://localhost:3000');
+    socket.on('connect', function(data) {
+      socket.emit('message', { message : 'Client says : Hello there'});
+    });
+    socket.on('welcome', function(data) {
+      console.log(data.message);
+      alert(data.message);
+    });
